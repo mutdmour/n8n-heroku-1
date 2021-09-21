@@ -19,7 +19,7 @@ RUN apk --update add --virtual build-dependencies python build-base && \
 	apk --update add git && \
 	apk del build-dependencies
 
-RUN N8N_CORE_BRANCH=switch-to-fontsource && \
+RUN N8N_CORE_BRANCH=mybranch && \
     git clone https://github.com/n8n-io/n8n && \
 	cd n8n && \
     echo $N8N_CORE_BRANCH && \
@@ -27,6 +27,7 @@ RUN N8N_CORE_BRANCH=switch-to-fontsource && \
     git checkout $N8N_CORE_BRANCH && \
 	npm install -g typescript && \
 	npm install -g lerna && \
+	npm install && \
 	lerna bootstrap --hoist && \
 	npm_config_user=root npm run build 
 
@@ -41,4 +42,3 @@ RUN chmod +x /start.sh
 
 # define execution entrypoint
 CMD ["/start.sh"]
-
